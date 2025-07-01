@@ -1,18 +1,29 @@
-# DemoPhoenixInertiaSvelte
+# Phoenix + Vite + Inertia.js + Svelte 5 Demo
 
-To start your Phoenix server:
+Demonstration application showing Phoenix integration with Inertia.js, Vite and Svelte 5.
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Vite integration [commit](https://github.com/ravecat/demo_phoenix_inertia_svelte/commit/abc21ffdf4ab9d2edc61737fd6353d724edf0036) (thanks to [@LostKobrakai](https://github.com/LostKobrakai) for great [phoenix_vite](https://github.com/LostKobrakai/phoenix_vite))
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Inertia.js integration [commit](https://github.com/ravecat/demo_phoenix_inertia_svelte/commit/fc370e287e402d1135920a3a83a960db7eec51b9)
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Start
 
-## Learn more
+1. Initialize:
 
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
+   ```bash
+   mix setup
+   ```
+
+2. Start the Phoenix server:
+
+   ```bash
+   iex -S mix phx.server
+   ```
+
+## Technology Stack
+
+- **Phoenix 1.8** - Web framework for Elixir
+- **Inertia.js 2.4** - SPA framework for Phoenix
+- **Svelte 5** - Reactive JavaScript framework
+- **vite** - JavaScript bundler
+- **Tailwind CSS + DaisyUI** - CSS framework and components
