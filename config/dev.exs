@@ -24,11 +24,8 @@ config :demo_phoenix_inertia_svelte, DemoPhoenixInertiaSvelteWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "KsQ4DMtdG3t6zmdRA+sbDrZK/5qwzrBfZaePc4EFlGKdKhCbUjy7vaxuXC2vkPsI",
-  watchers: [
-    esbuild:
-      {Esbuild, :install_and_run, [:demo_phoenix_inertia_svelte, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:demo_phoenix_inertia_svelte, ~w(--watch)]}
-  ]
+  watchers: [vite: {Bun, :install_and_run, [:vite, ~w(dev)]}],
+  static_url: [host: "localhost", port: 5173]
 
 # ## SSL Support
 #

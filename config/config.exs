@@ -7,6 +7,11 @@
 # General application configuration
 import Config
 
+config :bun,
+  version: "1.2.16",
+  assets: [args: [], cd: Path.expand("../assets", __DIR__)],
+  vite: [args: ~w(x vite), cd: Path.expand("../assets", __DIR__)]
+
 config :demo_phoenix_inertia_svelte,
   ecto_repos: [DemoPhoenixInertiaSvelte.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -34,27 +39,6 @@ config :demo_phoenix_inertia_svelte, DemoPhoenixInertiaSvelteWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :demo_phoenix_inertia_svelte, DemoPhoenixInertiaSvelte.Mailer,
   adapter: Swoosh.Adapters.Local
-
-# Configure esbuild (the version is required)
-config :esbuild,
-  version: "0.17.11",
-  demo_phoenix_inertia_svelte: [
-    args:
-      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
-
-# Configure tailwind (the version is required)
-config :tailwind,
-  version: "4.0.9",
-  demo_phoenix_inertia_svelte: [
-    args: ~w(
-      --input=assets/css/app.css
-      --output=priv/static/assets/css/app.css
-    ),
-    cd: Path.expand("..", __DIR__)
-  ]
 
 # Configures Elixir's Logger
 config :logger, :default_formatter,
