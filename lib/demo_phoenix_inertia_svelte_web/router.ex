@@ -1,6 +1,16 @@
 defmodule DemoPhoenixInertiaSvelteWeb.Router do
   use DemoPhoenixInertiaSvelteWeb, :router
 
+  pipeline :inertia do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {DemoPhoenixInertiaSvelteWeb.Layouts, :inertia_root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug Inertia.Plug
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +18,7 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     plug :put_root_layout, html: {DemoPhoenixInertiaSvelteWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Inertia.Plug
   end
 
   pipeline :api do
@@ -18,6 +29,12 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/", DemoPhoenixInertiaSvelteWeb do
+    pipe_through :inertia
+
+    get "/inertia", PageController, :inertia
   end
 
   # Other scopes may use custom stacks.

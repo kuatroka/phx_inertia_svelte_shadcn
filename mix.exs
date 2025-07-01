@@ -33,6 +33,8 @@ defmodule DemoPhoenixInertiaSvelte.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:inertia, "~> 2.0"},
+      {:igniter, "~> 0.6", only: [:dev, :test]},
       {:phoenix_vite, "~> 0.2"},
       {:phoenix, "~> 1.8.0-rc.3", override: true},
       {:phoenix_ecto, "~> 4.5"},
