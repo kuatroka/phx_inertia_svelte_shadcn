@@ -35,7 +35,7 @@ defmodule DemoPhoenixInertiaSvelte.MixProject do
     [
       {:inertia, "~> 2.0"},
       {:igniter, "~> 0.6", only: [:dev, :test]},
-      {:phoenix_vite, "~> 0.2"},
+      {:phoenix_vite, git: "https://github.com/ravecat/phoenix_vite.git"},
       {:phoenix, "~> 1.8.0-rc.3", override: true},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},
