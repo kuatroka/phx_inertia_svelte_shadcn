@@ -2,13 +2,10 @@ import Config
 
 # Configure your database
 config :demo_phoenix_inertia_svelte, DemoPhoenixInertiaSvelte.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "demo_phoenix_inertia_svelte_dev",
+  database: Path.expand("../priv/dev.db", __DIR__),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 5
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

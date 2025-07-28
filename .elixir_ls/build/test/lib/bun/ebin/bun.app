@@ -1,0 +1,10 @@
+{application,bun,
+             [{modules,['Elixir.Bun','Elixir.Mix.Tasks.Bun',
+                        'Elixir.Mix.Tasks.Bun.Install']},
+              {optional_applications,[inets,ssl]},
+              {applications,[kernel,stdlib,elixir,logger,inets,ssl]},
+              {description,"Mix tasks for installing and invoking bun"},
+              {registered,[]},
+              {vsn,"1.5.0"},
+              {mod,{'Elixir.Bun',[]}},
+              {env,[{default,[]}]}]}.
