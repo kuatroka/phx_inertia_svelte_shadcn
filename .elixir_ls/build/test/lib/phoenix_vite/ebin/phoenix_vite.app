@@ -1,0 +1,12 @@
+{application,phoenix_vite,
+             [{modules,['Elixir.Mix.Tasks.PhoenixVite.Install',
+                        'Elixir.PhoenixVite','Elixir.PhoenixVite.Components',
+                        'Elixir.PhoenixVite.Igniter',
+                        'Elixir.PhoenixVite.Manifest',
+                        'Elixir.PhoenixVite.Manifest.Chunk']},
+              {optional_applications,[igniter]},
+              {applications,[kernel,stdlib,elixir,logger,phoenix_live_view,
+                             igniter]},
+              {description,"`PhoenixVite` integrates the `vite` built tool with `:phoenix`."},
+              {registered,[]},
+              {vsn,"0.2.1"}]}.
