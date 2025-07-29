@@ -11,30 +11,14 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     plug Inertia.Plug
   end
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, html: {DemoPhoenixInertiaSvelteWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug Inertia.Plug
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", DemoPhoenixInertiaSvelteWeb do
-    pipe_through :browser
-
-    get "/", PageController, :home
-  end
-
-  scope "/", DemoPhoenixInertiaSvelteWeb do
     pipe_through :inertia
 
-    get "/inertia", PageController, :inertia
+    get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -52,7 +36,7 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through :inertia
 
       live_dashboard "/dashboard", metrics: DemoPhoenixInertiaSvelteWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
