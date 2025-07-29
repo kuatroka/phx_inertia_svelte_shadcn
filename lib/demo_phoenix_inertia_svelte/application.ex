@@ -13,8 +13,8 @@ defmodule DemoPhoenixInertiaSvelte.Application do
       {DNSCluster,
        query: Application.get_env(:demo_phoenix_inertia_svelte, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: DemoPhoenixInertiaSvelte.PubSub},
-      # Start a worker by calling: DemoPhoenixInertiaSvelte.Worker.start_link(arg)
-      # {DemoPhoenixInertiaSvelte.Worker, arg},
+      # Start the Tetris score buffer
+      DemoPhoenixInertiaSvelte.Tetris.ScoreBuffer,
       # Start the SSR process pool for Inertia/Svelte
       # You must specify a `path` option to locate `ssr.js`
       {Inertia.SSR, path: Path.join([Application.app_dir(:demo_phoenix_inertia_svelte), "priv"])},

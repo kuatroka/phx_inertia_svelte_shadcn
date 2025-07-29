@@ -36,6 +36,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gameboy: {
+          darkest: "#0f380f",
+          dark: "#306230",
+          light: "#8bac0f",
+          lightest: "#9bbc0f",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

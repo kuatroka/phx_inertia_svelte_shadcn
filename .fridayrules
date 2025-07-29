@@ -1,0 +1,57 @@
+# Phoenix + Inertia.js + Svelte 5 + shadcn-svelte Application
+
+## Architecture
+- **Backend**: Phoenix (Elixir) with Inertia.js adapter
+- **Frontend**: Svelte 5 with Inertia.js client
+- **Database**: SQLite with Ecto
+- **UI**: shadcn-svelte components + Tailwind CSS v4
+- **Build**: Vite for frontend assets, Bun for package management
+- **Server**: Bandit HTTP server
+
+## Directory Structure
+- `lib/` - Phoenix backend code
+- `assets/js/` - Svelte frontend code
+  - `pages/` - Inertia.js page components
+  - `lib/components/ui/` - shadcn-svelte UI components
+- `test/` - ExUnit tests
+- `priv/repo/` - Database migrations and seeds
+
+## Testing
+```bash
+# Run all tests
+mix test
+
+# Run tests with coverage
+mix test --cover
+
+# Run specific test file
+mix test test/path/to/test_file.exs
+
+# Setup test database
+mix ecto.create
+mix ecto.migrate
+```
+
+## Linting & Formatting
+```bash
+# Format Elixir code
+mix format
+
+# Check Elixir formatting
+mix format --check-formatted
+
+# Frontend linting/formatting handled by Vite/Svelte toolchain
+cd assets && npm run lint  # if configured
+```
+
+## Development
+```bash
+# Setup project
+mix setup
+
+# Start development server
+mix phx.server
+
+# Build frontend assets
+mix assets.build
+```

@@ -18,13 +18,15 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
   scope "/", DemoPhoenixInertiaSvelteWeb do
     pipe_through :inertia
 
-    get "/", PageController, :home
+    get "/", GameController, :index
+    get "/welcome", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", DemoPhoenixInertiaSvelteWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", DemoPhoenixInertiaSvelteWeb do
+    pipe_through :api
+
+    resources "/scores", Api.ScoreController, only: [:create, :index]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:demo_phoenix_inertia_svelte, :dev_routes) do
