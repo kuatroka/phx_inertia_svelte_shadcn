@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import path from "path";
 
 export default defineConfig(({ command }) => {
   return {
@@ -11,6 +12,9 @@ export default defineConfig(({ command }) => {
     },
     resolve: {
       conditions: ["svelte", "browser", "import", "default"],
+      alias: {
+        $lib: path.resolve("./js/lib"),
+      },
     },
     build: {
       manifest: true,

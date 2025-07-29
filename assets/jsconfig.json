@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "$lib": ["./js/lib"],
+      "$lib/*": ["./js/lib/*"]
+    }
+  },
+  "include": ["js/**/*", "css/**/*"],
+  "exclude": ["node_modules"]
+}
