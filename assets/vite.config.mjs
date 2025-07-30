@@ -20,9 +20,12 @@ export default defineConfig(({ command }) => {
       manifest: true,
       rollupOptions: {
         input: ["js/app.js", "css/app.css"],
-        output: {
-          manualChunks: {
-            'tetris-worker': ['js/workers/tetrisEngine.ts']
+      },
+      worker: {
+        format: 'es',
+        rollupOptions: {
+          output: {
+            entryFileNames: 'assets/tetris-worker.js'
           }
         }
       },

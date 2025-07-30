@@ -24,7 +24,7 @@
       const offscreen = canvas.transferControlToOffscreen?.();
       
       worker = new Worker(
-        new URL('../../workers/tetrisEngine.ts', import.meta.url),
+        new URL('../../workers/tetrisEngine.ts?worker', import.meta.url),
         { type: 'module' }
       );
 
