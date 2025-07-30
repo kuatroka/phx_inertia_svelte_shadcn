@@ -7,7 +7,6 @@
   
   let canvas: HTMLCanvasElement;
   let worker: Worker;
-  let workerUrl: string;
   let isInitialized = $state(false);
 
   onMount(() => {
@@ -24,12 +23,9 @@
       // Try to use OffscreenCanvas for better performance
       const offscreen = canvas.transferControlToOffscreen?.();
       
-      // Import the worker code and create a blob URL to avoid CORS issues
-      const workerModule = await import('../../workers/tetrisEngine.ts?raw');
-      const workerBlob = new Blob([workerModule.default], { type: 'application/javascript' });
-      workerUrl = URL.createObjectURL(workerBlob);
-      
-      worker = new Worker(workerUrl, { type: 'module' });
+      // Import the worker loader to avoid CORS issues
+      const { createTetrisWorker } = await import('../workerLoader');
+      worker = createTetrisWorker();
 
       worker.postMessage({
         type: 'init',
@@ -110,9 +106,6 @@
   function cleanup() {
     if (worker) {
       worker.terminate();
-    }
-    if (workerUrl) {
-      URL.revokeObjectURL(workerUrl);
     }
   }
 

@@ -21,14 +21,6 @@ export default defineConfig(({ command }) => {
       rollupOptions: {
         input: ["js/app.js", "css/app.css"],
       },
-      worker: {
-        format: 'es',
-        rollupOptions: {
-          output: {
-            entryFileNames: 'assets/tetris-worker.js'
-          }
-        }
-      },
       outDir: "../priv/static",
       emptyOutDir: true,
     },
