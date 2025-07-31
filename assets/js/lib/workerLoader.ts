@@ -448,12 +448,6 @@ self.onmessage = function(event) {
       break;
       
     case 'input':
-      if (gameState.gameOver && message.key === 'r') {
-        resetGame();
-        startGameLoop();
-        break;
-      }
-      
       if (message.action === 'keydown') {
         switch (message.key) {
           case 'arrowleft':
@@ -466,8 +460,10 @@ self.onmessage = function(event) {
             inputState.down = true;
             break;
           case 'arrowup':
-          case ' ':
             inputState.rotate = true;
+            break;
+          case ' ':
+            inputState.hardDrop = true;
             break;
           case 'enter':
             inputState.hardDrop = true;
@@ -481,10 +477,8 @@ self.onmessage = function(event) {
             }
             break;
           case 'r':
-            if (gameState.gameOver) {
-              resetGame();
-              startGameLoop();
-            }
+            resetGame();
+            startGameLoop();
             break;
         }
       } else if (message.action === 'keyup') {
