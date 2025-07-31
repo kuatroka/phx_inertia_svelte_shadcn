@@ -5,25 +5,10 @@ export function createTetrisWorker(): Worker {
 // Tetris Game Engine Web Worker
 // Runs at 60fps with complete game logic isolated from main thread
 
-interface InitMessage {
-  type: 'init';
-  canvas: OffscreenCanvas | null;
-  sprites: string;
-  canvasId?: string;
-}
-
-interface InputMessage {
-  type: 'input';
-  key: string;
-  action: 'keydown' | 'keyup';
-}
-
-interface VisibilityMessage {
-  type: 'visibility';
-  hidden: boolean;
-}
-
-type WorkerMessage = InitMessage | InputMessage | VisibilityMessage;
+// Message types:
+// InitMessage: { type: 'init', canvas: OffscreenCanvas | null, sprites: string, canvasId?: string }
+// InputMessage: { type: 'input', key: string, action: 'keydown' | 'keyup' }
+// VisibilityMessage: { type: 'visibility', hidden: boolean }
 
 // Game constants
 const BOARD_WIDTH = 10;
@@ -85,8 +70,8 @@ const TETROMINO_COLORS = [
 // Game state
 let gameState = {
   board: Array(BOARD_HEIGHT).fill(null).map(() => Array(BOARD_WIDTH).fill(0)),
-  currentPiece: null as any,
-  nextPiece: null as any,
+  currentPiece: null,
+  nextPiece: null,
   score: 0,
   level: 1,
   lines: 0,
@@ -109,24 +94,18 @@ let inputState = {
 };
 
 // Rendering context
-let ctx: OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D | null = null;
-let spritesImage: ImageBitmap | HTMLImageElement | null = null;
-let canvas: OffscreenCanvas | HTMLCanvasElement | null = null;
+let ctx = null;
+let spritesImage = null;
+let canvas = null;
 
 // Game loop
-let animationId: number | null = null;
+let animationId = null;
 let isRunning = false;
 
 class Piece {
-  x: number;
-  y: number;
-  shape: number[][];
-  color: number;
-  type: string;
-
-  constructor(type: string) {
+  constructor(type) {
     this.type = type;
-    this.shape = TETROMINOES[type as keyof typeof TETROMINOES];
+    this.shape = TETROMINOES[type];
     this.color = Object.keys(TETROMINOES).indexOf(type) + 1;
     this.x = Math.floor(BOARD_WIDTH / 2) - Math.floor(this.shape[0].length / 2);
     this.y = 0;
@@ -144,7 +123,7 @@ class Piece {
     return false;
   }
 
-  isValidPosition(shape: number[][], x: number, y: number): boolean {
+  isValidPosition(shape, x, y) {
     for (let row = 0; row < shape.length; row++) {
       for (let col = 0; col < shape[row].length; col++) {
         if (shape[row][col] !== 0) {
@@ -164,7 +143,7 @@ class Piece {
     return true;
   }
 
-  move(dx: number, dy: number): boolean {
+  move(dx, dy) {
     if (this.isValidPosition(this.shape, this.x + dx, this.y + dy)) {
       this.x += dx;
       this.y += dy;
@@ -174,7 +153,7 @@ class Piece {
   }
 }
 
-function getRandomPiece(): Piece {
+function getRandomPiece() {
   const types = Object.keys(TETROMINOES);
   const randomType = types[Math.floor(Math.random() * types.length)];
   return new Piece(randomType);
@@ -241,7 +220,7 @@ function clearLines() {
   }
 }
 
-function update(deltaTime: number) {
+function update(deltaTime) {
   if (gameState.gameOver || gameState.paused || !gameState.currentPiece) return;
   
   // Handle input
@@ -334,7 +313,7 @@ function render() {
   }
 }
 
-function drawBlock(x: number, y: number, colorIndex: number) {
+function drawBlock(x, y, colorIndex) {
   if (!ctx) return;
   
   const color = TETROMINO_COLORS[colorIndex] || '#000000';
@@ -349,7 +328,7 @@ function drawBlock(x: number, y: number, colorIndex: number) {
   ctx.strokeRect(x, y, BLOCK_SIZE * 2, BLOCK_SIZE * 2);
 }
 
-function gameLoop(currentTime: number) {
+function gameLoop(currentTime) {
   if (!isRunning) return;
   
   const deltaTime = currentTime - gameState.lastTime;
@@ -414,7 +393,7 @@ function resetGame() {
   };
 }
 
-async function initializeGame(message: InitMessage) {
+async function initializeGame(message) {
   try {
     if (message.canvas) {
       // OffscreenCanvas mode
@@ -454,13 +433,13 @@ async function initializeGame(message: InitMessage) {
   } catch (error) {
     self.postMessage({
       type: 'error',
-      data: \`Failed to initialize game: \${error.message}\`
+      data: 'Failed to initialize game: ' + error.message
     });
   }
 }
 
 // Message handler
-self.onmessage = function(event: MessageEvent<WorkerMessage>) {
+self.onmessage = function(event) {
   const message = event.data;
   
   switch (message.type) {
