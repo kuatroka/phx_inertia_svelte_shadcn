@@ -27,10 +27,13 @@
       const { createTetrisWorker } = await import('../workerLoader');
       worker = createTetrisWorker();
 
+      // Convert relative URL to absolute URL for the worker
+      const spritesUrl = sprites.startsWith('http') ? sprites : new URL(sprites, window.location.origin).href;
+      
       worker.postMessage({
         type: 'init',
         canvas: offscreen || null,
-        sprites,
+        sprites: spritesUrl,
         canvasId: offscreen ? null : 'tetris-canvas'
       }, offscreen ? [offscreen] : []);
 
