@@ -1,7 +1,7 @@
 defmodule DemoPhoenixInertiaSvelte.Tetris.ScoreBuffer do
   use GenServer
   require Logger
-  import Ecto.Query
+
 
   alias DemoPhoenixInertiaSvelte.Repo
   alias DemoPhoenixInertiaSvelte.Tetris.HighScore
