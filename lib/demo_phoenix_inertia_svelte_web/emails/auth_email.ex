@@ -3,8 +3,10 @@ defmodule DemoPhoenixInertiaSvelteWeb.AuthEmail do
   alias DemoPhoenixInertiaSvelteWeb.Endpoint
 
   def magic_link_email(user, token) do
-    base_url = Application.get_env(:demo_phoenix_inertia_svelte, Endpoint)[:url][:host] || "localhost:4000"
-    magic_link_url = "http://#{base_url}/auth/verify/#{token}"
+    endpoint_config = Application.get_env(:demo_phoenix_inertia_svelte, Endpoint)
+    host = endpoint_config[:url][:host] || "localhost"
+    port = endpoint_config[:http][:port] || 4000
+    magic_link_url = "http://#{host}:#{port}/auth/verify/#{token}"
 
     new()
     |> to({user.username, user.email})
