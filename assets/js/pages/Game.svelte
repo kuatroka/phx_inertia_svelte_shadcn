@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { page } from '@inertiajs/inertia-svelte';
-  import { Inertia } from '@inertiajs/inertia';
+  import { page, router } from '@inertiajs/svelte';
   import GameCanvas from '../lib/components/GameCanvas.svelte';
   import Leaderboard from '../lib/components/Leaderboard.svelte';
-  import { Button } from '$lib/components/ui/button';
+  import Button from '$lib/components/ui/button.svelte';
 
   let { sprites }: {
     sprites: string;
@@ -73,7 +72,7 @@
   }
 
   function logout() {
-    Inertia.delete('/auth/logout');
+    router.delete('/auth/logout');
   }
 </script>
 

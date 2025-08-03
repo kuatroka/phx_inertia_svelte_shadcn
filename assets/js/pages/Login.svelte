@@ -1,10 +1,13 @@
 <script>
-  import { Inertia } from '@inertiajs/inertia'
-  import { page } from '@inertiajs/inertia-svelte'
-  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card'
-  import { Button } from '$lib/components/ui/button'
-  import { Input } from '$lib/components/ui/input'
-  import { Label } from '$lib/components/ui/label'
+  import { router, page } from '@inertiajs/svelte'
+  import Card from '$lib/components/ui/card.svelte'
+  import CardContent from '$lib/components/ui/card-content.svelte'
+  import CardDescription from '$lib/components/ui/card-description.svelte'
+  import CardHeader from '$lib/components/ui/card-header.svelte'
+  import CardTitle from '$lib/components/ui/card-title.svelte'
+  import Button from '$lib/components/ui/button.svelte'
+  import Input from '$lib/components/ui/input.svelte'
+  import Label from '$lib/components/ui/label.svelte'
 
   let email = ''
   let isSubmitting = false
@@ -13,7 +16,7 @@
     if (!email.trim()) return
     
     isSubmitting = true
-    Inertia.post('/auth/request', { email }, {
+    router.post('/auth/request', { email }, {
       onFinish: () => {
         isSubmitting = false
       }

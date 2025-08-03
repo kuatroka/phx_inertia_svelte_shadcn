@@ -1,7 +1,10 @@
 <script>
   import { onMount } from 'svelte'
-  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card'
-  import { Badge } from '$lib/components/ui/badge'
+  import Card from '$lib/components/ui/card.svelte'
+  import CardContent from '$lib/components/ui/card-content.svelte'
+  import CardHeader from '$lib/components/ui/card-header.svelte'
+  import CardTitle from '$lib/components/ui/card-title.svelte'
+  import Badge from '$lib/components/ui/badge.svelte'
 
   let leaderboard = []
   let loading = true
