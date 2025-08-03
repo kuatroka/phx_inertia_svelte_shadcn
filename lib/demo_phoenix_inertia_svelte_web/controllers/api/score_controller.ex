@@ -1,14 +1,28 @@
 defmodule DemoPhoenixInertiaSvelteWeb.Api.ScoreController do
   use DemoPhoenixInertiaSvelteWeb, :controller
 
-  alias DemoPhoenixInertiaSvelte.Tetris.ScoreBuffer
+  alias DemoPhoenixInertiaSvelte.Tetris
 
   def create(conn, %{"score" => score_params}) do
-    ScoreBuffer.submit_score(score_params)
-    
-    conn
-    |> put_status(:accepted)
-    |> json(%{status: "accepted", message: "Score submitted successfully"})
+    case conn.assigns[:current_user] do
+      nil ->
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{error: "Authentication required"})
+
+      user ->
+        case Tetris.upsert_user_score(user, score_params) do
+          {:ok, _user_score} ->
+            conn
+            |> put_status(:ok)
+            |> json(%{status: "success", message: "Score updated successfully"})
+
+          {:error, changeset} ->
+            conn
+            |> put_status(:bad_request)
+            |> json(%{error: "Invalid score data", details: changeset.errors})
+        end
+    end
   end
 
   def create(conn, _params) do
@@ -18,12 +32,12 @@ defmodule DemoPhoenixInertiaSvelteWeb.Api.ScoreController do
   end
 
   def index(conn, params) do
-    limit = Map.get(params, "limit", "10") |> String.to_integer()
-    limit = min(limit, 100) # Cap at 100 scores
+    limit = Map.get(params, "limit", "5") |> String.to_integer()
+    limit = min(limit, 10)
     
-    scores = ScoreBuffer.get_top_scores(limit)
+    leaderboard = Tetris.get_leaderboard(limit)
     
     conn
-    |> json(%{scores: scores})
+    |> json(%{leaderboard: leaderboard})
   end
 end

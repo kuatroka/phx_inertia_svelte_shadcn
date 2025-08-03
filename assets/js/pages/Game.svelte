@@ -1,17 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { page } from '@inertiajs/inertia-svelte';
+  import { Inertia } from '@inertiajs/inertia';
   import GameCanvas from '../lib/components/GameCanvas.svelte';
-  import HighScores from '../lib/components/HighScores.svelte';
+  import Leaderboard from '../lib/components/Leaderboard.svelte';
+  import { Button } from '$lib/components/ui/button';
 
-  let { sprites, top_scores }: {
+  let { sprites }: {
     sprites: string;
-    top_scores: Array<{
-      id: number;
-      player_name: string;
-      score: number;
-      level: number;
-      lines: number;
-    }>;
   } = $props();
 
   let gameState = $state({
@@ -22,57 +18,84 @@
     isPaused: false
   });
 
-  let showNameInput = $state(false);
-  let playerName = $state('');
+  let showGameOverModal = $state(false);
+  let isSubmittingScore = $state(false);
 
   function handleGameStateUpdate(event: CustomEvent) {
     gameState = { ...gameState, ...event.detail };
   }
 
   function handleGameOver(event: CustomEvent) {
-    const { score, level, lines } = event.detail;
+    const { score, level, lines, duration_seconds } = event.detail;
     gameState = { ...gameState, isPlaying: false };
     
     if (score > 0) {
-      showNameInput = true;
+      submitScore(score, level, lines, duration_seconds);
     }
   }
 
-  async function submitScore() {
-    if (!playerName.trim()) return;
+  async function submitScore(score: number, level: number, lines: number, duration_seconds?: number) {
+    if (isSubmittingScore) return;
+    
+    isSubmittingScore = true;
+    showGameOverModal = true;
 
     try {
-      await fetch('/api/scores', {
+      const response = await fetch('/api/scores', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           score: {
-            player_name: playerName.trim(),
-            score: gameState.score,
-            level: gameState.level,
-            lines: gameState.lines
+            score,
+            level,
+            lines,
+            duration_seconds
           }
         })
       });
-      
-      showNameInput = false;
-      playerName = '';
-      
-      // Refresh the page to show updated high scores
-      window.location.reload();
+
+      if (response.ok) {
+        // Score submitted successfully
+        setTimeout(() => {
+          showGameOverModal = false;
+          isSubmittingScore = false;
+        }, 2000);
+      } else {
+        console.error('Failed to submit score:', response.statusText);
+        isSubmittingScore = false;
+      }
     } catch (error) {
       console.error('Failed to submit score:', error);
+      isSubmittingScore = false;
     }
+  }
+
+  function logout() {
+    Inertia.delete('/auth/logout');
   }
 </script>
 
 <div class="min-h-screen bg-gameboy-lightest p-4">
   <div class="max-w-6xl mx-auto">
-    <h1 class="text-4xl font-bold text-gameboy-darkest text-center mb-8">
-      🎮 TETRIS
-    </h1>
+    <!-- Header with user info and logout -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-bold text-gameboy-darkest">
+        🎮 TETRIS
+      </h1>
+      
+      <div class="flex items-center gap-4">
+        {#if $page.props.auth?.user}
+          <span class="text-gameboy-darkest">
+            Welcome, <strong>{$page.props.auth.user.username}</strong>!
+          </span>
+          <Button variant="outline" size="sm" on:click={logout}>
+            Logout
+          </Button>
+        {/if}
+      </div>
+    </div>
     
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Game Area -->
@@ -117,47 +140,38 @@
           </div>
         </div>
         
-        <!-- High Scores -->
-        <HighScores scores={top_scores} />
+        <!-- Leaderboard -->
+        <Leaderboard />
       </div>
     </div>
   </div>
 </div>
 
-<!-- Name Input Modal -->
-{#if showNameInput}
+<!-- Game Over Modal -->
+{#if showGameOverModal}
   <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-gameboy-lightest p-6 rounded-lg border-4 border-gameboy-darkest max-w-md w-full mx-4">
       <h3 class="text-xl font-bold text-gameboy-darkest mb-4">Game Over!</h3>
       <p class="text-gameboy-darkest mb-4">
         Final Score: <span class="font-mono font-bold">{gameState.score.toLocaleString()}</span>
       </p>
-      <p class="text-gameboy-darkest mb-4">Enter your name for the high score:</p>
       
-      <input
-        bind:value={playerName}
-        type="text"
-        placeholder="Your name"
-        maxlength="50"
-        class="w-full p-2 border-2 border-gameboy-dark rounded mb-4 bg-gameboy-light text-gameboy-darkest"
-        onkeydown={(e) => e.key === 'Enter' && submitScore()}
-      />
-      
-      <div class="flex gap-2">
-        <button
-          onclick={submitScore}
-          disabled={!playerName.trim()}
-          class="flex-1 bg-gameboy-dark text-gameboy-lightest p-2 rounded border-2 border-gameboy-darkest disabled:opacity-50"
-        >
-          Submit Score
-        </button>
-        <button
-          onclick={() => { showNameInput = false; playerName = ''; }}
-          class="px-4 bg-gameboy-light text-gameboy-darkest p-2 rounded border-2 border-gameboy-darkest"
-        >
-          Skip
-        </button>
-      </div>
+      {#if isSubmittingScore}
+        <div class="text-center">
+          <p class="text-gameboy-darkest mb-4">Saving your score...</p>
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gameboy-darkest mx-auto"></div>
+        </div>
+      {:else}
+        <div class="text-center">
+          <p class="text-gameboy-darkest mb-4">✅ Score saved successfully!</p>
+          <Button 
+            variant="outline" 
+            on:click={() => { showGameOverModal = false; }}
+          >
+            Continue
+          </Button>
+        </div>
+      {/if}
     </div>
   </div>
 {/if}

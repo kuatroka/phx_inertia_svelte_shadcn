@@ -8,18 +8,36 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     plug :put_root_layout, html: {DemoPhoenixInertiaSvelteWeb.Layouts, :inertia_root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth
     plug Inertia.Plug
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth
+  end
+
+  pipeline :require_authenticated_user do
+    plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth, :require_authenticated_user
   end
 
   scope "/", DemoPhoenixInertiaSvelteWeb do
     pipe_through :inertia
 
-    get "/", GameController, :index
+    get "/", PageController, :home
     get "/welcome", PageController, :home
+    
+    get "/login", AuthController, :show_login
+    post "/auth/request", AuthController, :request_magic_link
+    get "/auth/verify/:token", AuthController, :verify_magic_link
+    delete "/auth/logout", AuthController, :logout
+  end
+
+  scope "/", DemoPhoenixInertiaSvelteWeb do
+    pipe_through [:inertia, :require_authenticated_user]
+
+    get "/game", GameController, :index
   end
 
   scope "/api", DemoPhoenixInertiaSvelteWeb do
