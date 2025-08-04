@@ -36,7 +36,7 @@ defmodule DemoPhoenixInertiaSvelte.MixProject do
     [
       {:inertia, "~> 2.5.1"},
       {:igniter, "~> 0.6",  override: true, only: [:dev, :test]},
-      {:phoenix_vite, git: "https://github.com/ravecat/phoenix_vite.git"},
+      {:phoenix_vite, git: "https://github.com/ravecat/phoenix_vite.git" },
       {:phoenix, "~> 1.8.0-rc.4", override: true},
       {:phoenix_ecto, "~> 4.6"},
       {:ecto_sql, "~> 3.13"},
@@ -59,7 +59,7 @@ defmodule DemoPhoenixInertiaSvelte.MixProject do
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.26"},
-      {:jason, "~> 1.2"},
+      {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:bun, "~> 1.5", runtime: Mix.env() == :dev}

@@ -155,6 +155,32 @@ function resetGame() {
   });
 }
 
+function getPieceSize(pieceType: keyof typeof TETROMINOES, rotation: number): { width: number; height: number } {
+  const piece = TETROMINOES[pieceType];
+  const rotatedPiece = rotatePiece(piece, rotation);
+  
+  let minX = rotatedPiece[0].length;
+  let maxX = -1;
+  let minY = rotatedPiece.length;
+  let maxY = -1;
+  
+  for (let py = 0; py < rotatedPiece.length; py++) {
+    for (let px = 0; px < rotatedPiece[py].length; px++) {
+      if (rotatedPiece[py][px] !== 0) {
+        minX = Math.min(minX, px);
+        maxX = Math.max(maxX, px);
+        minY = Math.min(minY, py);
+        maxY = Math.max(maxY, py);
+      }
+    }
+  }
+  
+  return {
+    width: maxX - minX + 1,
+    height: maxY - minY + 1
+  };
+}
+
 function spawnPiece() {
   const pieces = Object.keys(TETROMINOES) as (keyof typeof TETROMINOES)[];
   
@@ -162,9 +188,13 @@ function spawnPiece() {
     nextPiece = pieces[Math.floor(Math.random() * pieces.length)];
   }
   
+  // Calculate the actual width of the piece to center it properly
+  const pieceSize = getPieceSize(nextPiece, 0);
+  const spawnX = Math.floor((BOARD_WIDTH - pieceSize.width) / 2);
+  
   currentPiece = {
     type: nextPiece,
-    x: Math.floor(BOARD_WIDTH / 2) - 1,
+    x: Math.max(0, Math.min(spawnX, BOARD_WIDTH - pieceSize.width)),
     y: 0,
     rotation: 0
   };
@@ -382,8 +412,22 @@ function rotatePieceInput() {
   
   const newRotation = (currentPiece.rotation + 1) % 4;
   
+  // Try rotation at current position first
   if (!isCollision(currentPiece.x, currentPiece.y, currentPiece.type, newRotation)) {
     currentPiece.rotation = newRotation;
+    return;
+  }
+  
+  // Try wall kicks (simple implementation)
+  const wallKicks = [-1, 1, -2, 2]; // Try moving left/right to accommodate rotation
+  
+  for (const kick of wallKicks) {
+    const newX = currentPiece.x + kick;
+    if (!isCollision(newX, currentPiece.y, currentPiece.type, newRotation)) {
+      currentPiece.x = newX;
+      currentPiece.rotation = newRotation;
+      return;
+    }
   }
 }
 
