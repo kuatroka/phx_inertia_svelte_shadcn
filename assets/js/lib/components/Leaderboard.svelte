@@ -13,7 +13,9 @@
     try {
       const response = await fetch('/api/scores?limit=5')
       const data = await response.json()
+      console.log('Leaderboard data received:', data)
       leaderboard = data.leaderboard || []
+      console.log('Leaderboard entries:', leaderboard.length)
     } catch (error) {
       console.error('Failed to fetch leaderboard:', error)
     } finally {

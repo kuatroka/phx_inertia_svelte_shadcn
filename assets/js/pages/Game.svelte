@@ -40,10 +40,14 @@
     showGameOverModal = true;
 
     try {
+      // Get CSRF token from meta tag
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+      
       const response = await fetch('/api/scores', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken || '',
         },
         body: JSON.stringify({
           score: {
@@ -55,14 +59,18 @@
         })
       });
 
+      console.log('Score submission response:', response.status, response.statusText);
+      
       if (response.ok) {
-        // Score submitted successfully
+        const result = await response.json();
+        console.log('Score submitted successfully:', result);
         setTimeout(() => {
           showGameOverModal = false;
           isSubmittingScore = false;
         }, 2000);
       } else {
-        console.error('Failed to submit score:', response.statusText);
+        const errorText = await response.text();
+        console.error('Failed to submit score:', response.status, response.statusText, errorText);
         isSubmittingScore = false;
       }
     } catch (error) {
