@@ -2,10 +2,12 @@ defmodule DemoPhoenixInertiaSvelte.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:username, :max_score]}
   schema "users" do
     field :email, :string
     field :username, :string
     field :confirmed_at, :naive_datetime
+    field :max_score, :integer, virtual: true
 
     has_many :auth_tokens, DemoPhoenixInertiaSvelte.Accounts.AuthToken
     has_one :user_score, DemoPhoenixInertiaSvelte.Tetris.UserScore
@@ -26,6 +28,6 @@ defmodule DemoPhoenixInertiaSvelte.Accounts.User do
 
   def confirm_changeset(user) do
     user
-    |> change(confirmed_at: NaiveDateTime.utc_now())
+    |> change(confirmed_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second))
   end
 end

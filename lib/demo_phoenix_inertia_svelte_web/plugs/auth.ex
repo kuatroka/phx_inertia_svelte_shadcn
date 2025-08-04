@@ -9,7 +9,7 @@ defmodule DemoPhoenixInertiaSvelteWeb.Plugs.Auth do
     user_id = get_session(conn, :user_id)
     
     cond do
-      user = user_id && Accounts.get_user!(user_id) ->
+      user = user_id && Accounts.get_user_with_score!(user_id) ->
         assign(conn, :current_user, user)
       
       true ->

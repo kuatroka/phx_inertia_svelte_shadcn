@@ -9,6 +9,15 @@ defmodule DemoPhoenixInertiaSvelte.Accounts do
 
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_with_score!(id) do
+    user = Repo.get!(User, id)
+    max_score = case Repo.preload(user, :user_score).user_score do
+      nil -> 0
+      user_score -> user_score.score
+    end
+    %{user | max_score: max_score}
+  end
+
   def create_user_from_email(email) when is_binary(email) do
     username = email |> String.split("@") |> List.first()
     
@@ -26,7 +35,7 @@ defmodule DemoPhoenixInertiaSvelte.Accounts do
 
   def generate_magic_link_token(user) do
     token = :crypto.strong_rand_bytes(32) |> Base.url_encode64(padding: false)
-    expires_at = NaiveDateTime.utc_now() |> NaiveDateTime.add(15 * 60, :second)
+    expires_at = NaiveDateTime.utc_now() |> NaiveDateTime.add(15 * 60, :second) |> NaiveDateTime.truncate(:second)
 
     %AuthToken{}
     |> AuthToken.changeset(%{
@@ -38,7 +47,7 @@ defmodule DemoPhoenixInertiaSvelte.Accounts do
   end
 
   def verify_magic_link_token(token) when is_binary(token) do
-    now = NaiveDateTime.utc_now()
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     query = from t in AuthToken,
       where: t.token == ^token,
