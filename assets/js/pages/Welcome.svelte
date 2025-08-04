@@ -95,24 +95,54 @@
         What's Included
       </h2>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="text-left">
-          <h3 class="text-xl font-semibold mb-4">🚀 Ready to Use</h3>
-          <ul class="space-y-2 text-gray-600">
-            <li>• User authentication system</li>
-            <li>• Database migrations setup</li>
-            <li>• Email integration (Swoosh)</li>
-            <li>• Development tools configured</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div class="text-left bg-white p-6 rounded-lg shadow-sm border">
+          <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+            <span>🚀</span>
+            <span>Ready to Use</span>
+          </h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">•</span>
+              <span>User authentication system</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">•</span>
+              <span>Database migrations setup</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">•</span>
+              <span>Email integration (Swoosh)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">•</span>
+              <span>Development tools configured</span>
+            </li>
           </ul>
         </div>
 
-        <div class="text-left">
-          <h3 class="text-xl font-semibold mb-4">⚡ Performance Optimized</h3>
-          <ul class="space-y-2 text-gray-600">
-            <li>• Hot reload for development</li>
-            <li>• Optimized production builds</li>
-            <li>• Modern JavaScript bundling</li>
-            <li>• Efficient asset pipeline</li>
+        <div class="text-left bg-white p-6 rounded-lg shadow-sm border">
+          <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+            <span>⚡</span>
+            <span>Performance Optimized</span>
+          </h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>Hot reload for development</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>Optimized production builds</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>Modern JavaScript bundling</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>Efficient asset pipeline</span>
+            </li>
           </ul>
         </div>
       </div>
