@@ -148,29 +148,37 @@
 
 <!-- Game Over Modal -->
 {#if showGameOverModal}
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-gameboy-lightest p-6 rounded-lg border-4 border-gameboy-darkest max-w-md w-full mx-4">
-      <h3 class="text-xl font-bold text-gameboy-darkest mb-4">Game Over!</h3>
-      <p class="text-gameboy-darkest mb-4">
-        Final Score: <span class="font-mono font-bold">{gameState.score.toLocaleString()}</span>
-      </p>
-      
-      {#if isSubmittingScore}
-        <div class="text-center">
-          <p class="text-gameboy-darkest mb-4">Saving your score...</p>
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gameboy-darkest mx-auto"></div>
+  <div class="fixed inset-0 bg-gameboy-darkest bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-gameboy-dark p-8 rounded-xl border-4 border-gameboy-lightest max-w-md w-full mx-4 shadow-2xl shadow-gameboy-darkest/50 transform scale-105">
+      <div class="bg-gameboy-lightest p-6 rounded-lg border-2 border-gameboy-darkest">
+        <h3 class="text-2xl font-bold text-gameboy-darkest mb-6 text-center">🎮 Game Over!</h3>
+        <div class="bg-gameboy-dark p-4 rounded-lg border-2 border-gameboy-darkest mb-6">
+          <p class="text-gameboy-lightest text-center text-lg">
+            Final Score: <span class="font-mono font-bold text-xl text-gameboy-light">{gameState.score.toLocaleString()}</span>
+          </p>
         </div>
-      {:else}
-        <div class="text-center">
-          <p class="text-gameboy-darkest mb-4">✅ Score saved successfully!</p>
-          <Button 
-            variant="outline" 
-            on:click={() => { showGameOverModal = false; }}
-          >
-            Continue
-          </Button>
-        </div>
-      {/if}
+        
+        {#if isSubmittingScore}
+          <div class="text-center">
+            <p class="text-gameboy-darkest mb-6 text-lg font-semibold">Saving your score...</p>
+            <div class="animate-spin rounded-full h-10 w-10 border-4 border-gameboy-darkest border-t-transparent mx-auto"></div>
+          </div>
+        {:else}
+          <div class="text-center">
+            <div class="bg-green-100 border-2 border-green-400 rounded-lg p-4 mb-6">
+              <p class="text-green-800 text-lg font-bold">✅ Score saved successfully!</p>
+            </div>
+            <Button 
+              variant="outline" 
+              size="lg"
+              class="bg-gameboy-lightest hover:bg-gameboy-light text-gameboy-darkest border-2 border-gameboy-darkest font-bold px-8 py-3"
+              on:click={() => { showGameOverModal = false; }}
+            >
+              Continue Playing
+            </Button>
+          </div>
+        {/if}
+      </div>
     </div>
   </div>
 {/if}
