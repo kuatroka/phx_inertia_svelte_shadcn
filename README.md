@@ -1,6 +1,9 @@
-# Phoenix + Vite + Inertia.js + Svelte 5 Demo
+# Phoenix + Vite + Inertia.js + Svelte 5 TETRIS Game
 
-Demonstration application showing Phoenix integration with Inertia.js, Vite and Svelte 5.
+**This repository is a TETRIS game built with Phoenix (Elixir), Svelte 5, and Inertia.js.**
+
+
+Demonstration application showing Phoenix integration with Inertia.js, Vite, Svelte 5, and a high-performance TETRIS game with real-time scoring and leaderboard.
 
 Vite integration [commit](https://github.com/ravecat/demo_phoenix_inertia_svelte/commit/abc21ffdf4ab9d2edc61737fd6353d724edf0036) (thanks to [@LostKobrakai](https://github.com/LostKobrakai) for great [phoenix_vite](https://github.com/LostKobrakai/phoenix_vite))
 
