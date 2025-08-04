@@ -1,44 +1,43 @@
-# Phoenix + Inertia.js + Svelte 5 + shadcn-svelte Application
+# Phoenix + Inertia.js + Svelte 5 + shadcn-svelte Template
 
 ## Architecture
 - **Backend**: Phoenix (Elixir) with Inertia.js adapter
-- **Frontend**: Svelte 5 with Inertia.js client v2.x
+- **Frontend**: Svelte ^5.37.1 with Inertia.js client ^2.0.14
 - **Database**: SQLite with Ecto (migrated from Postgres)
-- **UI**: shadcn-svelte components + Tailwind CSS v4
-- **Build**: Vite for frontend assets, Bun for package management
+- **UI**: shadcn-svelte ^1.0.6 components + Tailwind CSS ^4.1.11
+- **Build**: Vite ^6.3.5 + esbuild ^0.25.8 for frontend assets, Bun for package management
 - **Server**: Bandit HTTP server (replaces Cowboy)
 - **Performance**: Web Workers for high-performance game logic
 - **Authentication**: Magic link authentication system
-- **LiveView**: Phoenix LiveView 1.1.2 with LazyHTML tokenizer
+- **LiveView**: Phoenix LiveView ~1.1.2 with LazyHTML ~0.1.3 tokenizer
 
 ## Key Features
-- **High-Performance Tetris Game**: Canvas-based rendering with Web Workers
+- **Clean Template**: Ready-to-use starter with authentication system
 - **Magic Link Authentication**: Passwordless login with email verification
-- **Real-time Leaderboards**: Per-user scoring system with live updates
-- **Responsive UI**: shadcn-svelte components with dark/light theme support
-- **TypeScript Ready**: Migration guide available for TS conversion
+- **Modern UI Components**: Full shadcn-svelte component library
+- **Responsive Design**: Mobile-first responsive layouts
+- **TypeScript Ready**: Easy migration path available
+- **Production Ready**: Optimized for deployment and performance
 
 ## Directory Structure
 - `lib/` - Phoenix backend code
   - `accounts/` - User authentication and management
-  - `tetris/` - Game logic, scoring, and session management
+  - `your_app/` - Application-specific business logic
   - `*_web/` - Controllers, plugs, emails, and web layer
 - `assets/js/` - Svelte frontend code
-  - `pages/` - Inertia.js page components (Game.svelte, Login.svelte)
+  - `pages/` - Inertia.js page components (Welcome.svelte, Login.svelte, Dashboard.svelte)
   - `lib/components/` - Reusable Svelte components
     - `ui/` - shadcn-svelte UI components (buttons, inputs, cards, etc.)
-  - `workers/` - Web Workers for game engine
-- `assets/public/images/` - Game sprites and static assets
+- `assets/public/images/` - Static assets and images
 - `test/` - ExUnit tests
 - `priv/repo/` - Database migrations and seeds
-- `docs/` - Documentation (TypeScript migration, Tetris plan)
+- `docs/` - Project documentation
 
-## Database Schema
-- **Users**: `id`, `username`, `email`, `max_score`, timestamps
-- **Auth Tokens**: `id`, `user_id`, `token`, `expires_at`, timestamps
-- **User Scores**: `id`, `user_id`, `score`, `lines_cleared`, `level`, timestamps
-- **Tetris Sessions**: Game session tracking
-- **High Scores**: Global leaderboard data
+## Database Schema (Template Base)
+- **Users**: `id`, `username`, `email`, `confirmed_at`, timestamps
+- **Auth Tokens**: `id`, `user_id`, `token`, `expires_at`, `used_at`, timestamps
+
+*Clean template ready for your custom schemas and tables*
 
 ## Testing
 ```bash
@@ -86,13 +85,13 @@ cd assets && bun install
 cd assets && bun run dev
 ```
 
-## Game Development
-- **Tetris Engine**: Implemented in Web Worker (`assets/js/workers/tetrisEngine.ts`)
-- **Canvas Rendering**: High-performance 2D canvas with sprite-based graphics
-- **Game Controls**: Arrow keys for movement, Space for hard drop, R for restart
-- **Collision Detection**: Optimized boundary and piece collision algorithms
-- **Scoring System**: Lines cleared, level progression, and high score tracking
-- **Performance**: 60 FPS game loop with requestAnimationFrame
+## Template Features
+- **Clean Architecture**: Well-organized code structure following Phoenix conventions
+- **Authentication System**: Complete magic link implementation ready to use
+- **UI Components**: Full shadcn-svelte component library integrated
+- **Responsive Design**: Mobile-first layouts with Tailwind CSS
+- **Development Ready**: Hot reload, asset pipeline, and build tools configured
+- **Production Ready**: Optimized builds and deployment configurations
 
 ## Authentication System
 - **Magic Links**: Email-based passwordless authentication
@@ -102,28 +101,38 @@ cd assets && bun run dev
 - **Security**: CSRF protection and secure token validation
 
 ## Key Dependencies
+
+### Backend (mix.exs)
 ```elixir
-# Backend (mix.exs)
-{:phoenix, "~> 1.7.0"}
+{:phoenix, "~> 1.8.0"}
 {:phoenix_live_view, "~> 1.1.2"}
-{:inertia, "~> 1.3"}
-{:ecto_sql, "~> 3.10"}
-{:ecto_sqlite3, "~> 0.12"}
-{:bandit, "~> 1.0"}
-{:swoosh, "~> 1.3"}
-{:jason, "~> 1.2"}
+{:inertia, "~> 2.5.1"}
+{:ecto_sql, "~> 3.13"}
+{:ecto_sqlite3, "~> 0.21"}
+{:bandit, "~> 1.5"}
+{:swoosh, "~> 1.16"}
+{:jason, "~> 1.4"}
+{:lazy_html, "~> 0.1.3"}
 ```
 
+### Frontend (assets/package.json)
 ```json
-// Frontend (assets/package.json)
 {
-  "@inertiajs/svelte": "^2.0.0",
-  "svelte": "^5.0.0",
-  "vite": "^5.0.0",
-  "tailwindcss": "^4.0.0",
-  "shadcn-svelte": "latest"
+  "@inertiajs/svelte": "^2.0.14",
+  "svelte": "^5.37.1",
+  "vite": "^6.3.5",
+  "tailwindcss": "^4.1.11",
+  "@tailwindcss/vite": "^4.1.0",
+  "shadcn-svelte": "^1.0.6",
+  "@sveltejs/vite-plugin-svelte": "^5.1.0"
 }
 ```
+
+### Build Tools & Development
+- **Vite**: ^6.3.5 - Modern build tool with HMR and optimized bundling
+- **esbuild**: ^0.25.8 - Ultra-fast JavaScript bundler (via Vite)
+- **Bun**: Package manager and JavaScript runtime for development
+- **LazyHTML**: ^0.1.3 - HTML tokenizer for Phoenix LiveView performance
 
 ## Performance Optimizations
 - **Web Workers**: Game logic runs in separate thread

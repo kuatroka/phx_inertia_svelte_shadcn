@@ -37,13 +37,7 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
   scope "/", DemoPhoenixInertiaSvelteWeb do
     pipe_through [:inertia, :require_authenticated_user]
 
-    get "/game", GameController, :index
-  end
-
-  scope "/api", DemoPhoenixInertiaSvelteWeb do
-    pipe_through :api
-
-    resources "/scores", Api.ScoreController, only: [:create, :index]
+    get "/dashboard", PageController, :dashboard
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

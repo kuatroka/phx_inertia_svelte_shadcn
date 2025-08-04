@@ -4,10 +4,13 @@ defmodule DemoPhoenixInertiaSvelteWeb.PageController do
   def home(conn, _params) do
     if conn.assigns.current_user do
       conn
-      |> redirect(to: "/game")
+      |> redirect(to: "/dashboard")
     else
-      conn
-      |> redirect(to: "/login")
+      render_inertia(conn, "Welcome", %{})
     end
+  end
+
+  def dashboard(conn, _params) do
+    render_inertia(conn, "Dashboard", %{})
   end
 end
