@@ -49,6 +49,7 @@
           'Content-Type': 'application/json',
           'X-CSRF-Token': csrfToken || '',
         },
+        credentials: 'same-origin',
         body: JSON.stringify({
           score: {
             score,

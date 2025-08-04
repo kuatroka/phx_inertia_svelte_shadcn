@@ -11,7 +11,9 @@
 
   async function fetchLeaderboard() {
     try {
-      const response = await fetch('/api/scores?limit=5')
+      const response = await fetch('/api/scores?limit=5', {
+        credentials: 'same-origin'
+      })
       const data = await response.json()
       console.log('Leaderboard data received:', data)
       leaderboard = data.leaderboard || []
