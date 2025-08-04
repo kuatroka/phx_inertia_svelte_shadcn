@@ -5,22 +5,36 @@ defmodule DemoPhoenixInertiaSvelte.Tetris do
   alias DemoPhoenixInertiaSvelte.Accounts.User
 
   def upsert_user_score(%User{} = user, score_params) do
-    case Repo.get_by(UserScore, user_id: user.id) do
+    # Convert string keys to atom keys and add user_id
+    attrs = score_params
+    |> Map.new(fn {k, v} -> {String.to_existing_atom(k), v} end)
+    |> Map.put(:user_id, user.id)
+    
+    result = case Repo.get_by(UserScore, user_id: user.id) do
       nil ->
         %UserScore{}
-        |> UserScore.changeset(Map.put(score_params, :user_id, user.id))
+        |> UserScore.changeset(attrs)
         |> Repo.insert()
       
       existing_score ->
-        new_score = Map.get(score_params, :score, 0)
+        new_score = Map.get(attrs, :score, 0)
         if new_score > existing_score.score do
           existing_score
-          |> UserScore.changeset(score_params)
+          |> UserScore.changeset(attrs)
           |> Repo.update()
         else
           {:ok, existing_score}
         end
     end
+
+    # Broadcast score update for real-time updates
+    case result do
+      {:ok, _user_score} ->
+        Phoenix.PubSub.broadcast(DemoPhoenixInertiaSvelte.PubSub, "leaderboard", {:score_updated})
+      _ -> :ok
+    end
+
+    result
   end
 
   def get_leaderboard(limit \\ 5) do

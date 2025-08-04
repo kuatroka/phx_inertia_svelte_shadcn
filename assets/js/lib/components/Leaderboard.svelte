@@ -38,11 +38,16 @@
 
   onMount(fetchLeaderboard)
 
-  // Refresh leaderboard every 30 seconds
+  // Refresh leaderboard every 2 minutes
   onMount(() => {
-    const interval = setInterval(fetchLeaderboard, 30000)
+    const interval = setInterval(fetchLeaderboard, 120000)
     return () => clearInterval(interval)
   })
+
+  // Export refresh function for manual updates
+  export function refreshLeaderboard() {
+    fetchLeaderboard()
+  }
 </script>
 
 <Card class="w-full">

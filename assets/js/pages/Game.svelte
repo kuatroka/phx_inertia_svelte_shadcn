@@ -19,6 +19,7 @@
 
   let showGameOverModal = $state(false);
   let isSubmittingScore = $state(false);
+  let leaderboardComponent;
 
   function handleGameStateUpdate(event: CustomEvent) {
     gameState = { ...gameState, ...event.detail };
@@ -65,10 +66,12 @@
       if (response.ok) {
         const result = await response.json();
         console.log('Score submitted successfully:', result);
-        setTimeout(() => {
-          showGameOverModal = false;
-          isSubmittingScore = false;
-        }, 2000);
+        // Refresh leaderboard immediately after score submission
+        if (leaderboardComponent?.refreshLeaderboard) {
+          leaderboardComponent.refreshLeaderboard();
+        }
+        showGameOverModal = false;
+        isSubmittingScore = false;
       } else {
         const errorText = await response.text();
         console.error('Failed to submit score:', response.status, response.statusText, errorText);
@@ -149,7 +152,7 @@
         </div>
         
         <!-- Leaderboard -->
-        <Leaderboard />
+        <Leaderboard bind:this={leaderboardComponent} />
       </div>
     </div>
   </div>
