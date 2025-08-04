@@ -2,19 +2,43 @@
 
 ## Architecture
 - **Backend**: Phoenix (Elixir) with Inertia.js adapter
-- **Frontend**: Svelte 5 with Inertia.js client
-- **Database**: SQLite with Ecto
+- **Frontend**: Svelte 5 with Inertia.js client v2.x
+- **Database**: SQLite with Ecto (migrated from Postgres)
 - **UI**: shadcn-svelte components + Tailwind CSS v4
 - **Build**: Vite for frontend assets, Bun for package management
-- **Server**: Bandit HTTP server
+- **Server**: Bandit HTTP server (replaces Cowboy)
+- **Performance**: Web Workers for high-performance game logic
+- **Authentication**: Magic link authentication system
+- **LiveView**: Phoenix LiveView 1.1.2 with LazyHTML tokenizer
+
+## Key Features
+- **High-Performance Tetris Game**: Canvas-based rendering with Web Workers
+- **Magic Link Authentication**: Passwordless login with email verification
+- **Real-time Leaderboards**: Per-user scoring system with live updates
+- **Responsive UI**: shadcn-svelte components with dark/light theme support
+- **TypeScript Ready**: Migration guide available for TS conversion
 
 ## Directory Structure
 - `lib/` - Phoenix backend code
+  - `accounts/` - User authentication and management
+  - `tetris/` - Game logic, scoring, and session management
+  - `*_web/` - Controllers, plugs, emails, and web layer
 - `assets/js/` - Svelte frontend code
-  - `pages/` - Inertia.js page components
-  - `lib/components/ui/` - shadcn-svelte UI components
+  - `pages/` - Inertia.js page components (Game.svelte, Login.svelte)
+  - `lib/components/` - Reusable Svelte components
+    - `ui/` - shadcn-svelte UI components (buttons, inputs, cards, etc.)
+  - `workers/` - Web Workers for game engine
+- `assets/public/images/` - Game sprites and static assets
 - `test/` - ExUnit tests
 - `priv/repo/` - Database migrations and seeds
+- `docs/` - Documentation (TypeScript migration, Tetris plan)
+
+## Database Schema
+- **Users**: `id`, `username`, `email`, `max_score`, timestamps
+- **Auth Tokens**: `id`, `user_id`, `token`, `expires_at`, timestamps
+- **User Scores**: `id`, `user_id`, `score`, `lines_cleared`, `level`, timestamps
+- **Tetris Sessions**: Game session tracking
+- **High Scores**: Global leaderboard data
 
 ## Testing
 ```bash
@@ -54,4 +78,63 @@ mix phx.server
 
 # Build frontend assets
 mix assets.build
+
+# Install frontend dependencies (using Bun)
+cd assets && bun install
+
+# Run frontend dev server (if needed)
+cd assets && bun run dev
 ```
+
+## Game Development
+- **Tetris Engine**: Implemented in Web Worker (`assets/js/workers/tetrisEngine.ts`)
+- **Canvas Rendering**: High-performance 2D canvas with sprite-based graphics
+- **Game Controls**: Arrow keys for movement, Space for hard drop, R for restart
+- **Collision Detection**: Optimized boundary and piece collision algorithms
+- **Scoring System**: Lines cleared, level progression, and high score tracking
+- **Performance**: 60 FPS game loop with requestAnimationFrame
+
+## Authentication System
+- **Magic Links**: Email-based passwordless authentication
+- **Token Management**: Secure token generation with expiration
+- **User Sessions**: Phoenix session-based authentication
+- **Email Integration**: Swoosh for email delivery
+- **Security**: CSRF protection and secure token validation
+
+## Key Dependencies
+```elixir
+# Backend (mix.exs)
+{:phoenix, "~> 1.7.0"}
+{:phoenix_live_view, "~> 1.1.2"}
+{:inertia, "~> 1.3"}
+{:ecto_sql, "~> 3.10"}
+{:ecto_sqlite3, "~> 0.12"}
+{:bandit, "~> 1.0"}
+{:swoosh, "~> 1.3"}
+{:jason, "~> 1.2"}
+```
+
+```json
+// Frontend (assets/package.json)
+{
+  "@inertiajs/svelte": "^2.0.0",
+  "svelte": "^5.0.0",
+  "vite": "^5.0.0",
+  "tailwindcss": "^4.0.0",
+  "shadcn-svelte": "latest"
+}
+```
+
+## Performance Optimizations
+- **Web Workers**: Game logic runs in separate thread
+- **Canvas Optimization**: Efficient sprite rendering and dirty rectangle updates
+- **Database**: SQLite for fast local development and deployment
+- **Asset Pipeline**: Vite for optimized bundling and hot reload
+- **HTTP/2**: Bandit server with modern protocol support
+
+## Deployment Considerations
+- **Database**: SQLite suitable for single-instance deployments
+- **Assets**: Vite builds optimized production bundles
+- **Email**: Configure Swoosh adapter for production email delivery
+- **Environment**: Set proper Phoenix secret key and database paths
+- **Performance**: Consider database connection pooling for high traffic
