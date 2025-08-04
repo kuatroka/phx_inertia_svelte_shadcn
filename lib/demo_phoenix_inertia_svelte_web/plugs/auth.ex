@@ -9,12 +9,17 @@ defmodule DemoPhoenixInertiaSvelteWeb.Plugs.Auth do
     user_id = get_session(conn, :user_id)
     
     cond do
-      user = user_id && Accounts.get_user_with_score!(user_id) ->
+      user = user_id && Accounts.get_user!(user_id) ->
         assign(conn, :current_user, user)
       
       true ->
         assign(conn, :current_user, nil)
     end
+  rescue
+    Ecto.NoResultsError ->
+      conn
+      |> assign(:current_user, nil)
+      |> delete_session(:user_id)
   end
 
   def require_authenticated_user(conn, _opts) do
@@ -31,7 +36,7 @@ defmodule DemoPhoenixInertiaSvelteWeb.Plugs.Auth do
   def redirect_if_authenticated(conn, _opts) do
     if conn.assigns[:current_user] do
       conn
-      |> redirect(to: "/game")
+      |> redirect(to: "/dashboard")
       |> halt()
     else
       conn

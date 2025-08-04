@@ -8,14 +8,14 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
     plug :put_root_layout, html: {DemoPhoenixInertiaSvelteWeb.Layouts, :inertia_root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth
+    # plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth  # Disabled for clean template
     plug Inertia.Plug
   end
 
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
-    plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth
+    # plug DemoPhoenixInertiaSvelteWeb.Plugs.Auth  # Disabled for clean template
   end
 
   pipeline :require_authenticated_user do
@@ -27,17 +27,14 @@ defmodule DemoPhoenixInertiaSvelteWeb.Router do
 
     get "/", PageController, :home
     get "/welcome", PageController, :home
-    
-    get "/login", AuthController, :show_login
-    post "/auth/request", AuthController, :request_magic_link
-    get "/auth/verify/:token", AuthController, :verify_magic_link
-    delete "/auth/logout", AuthController, :logout
-  end
-
-  scope "/", DemoPhoenixInertiaSvelteWeb do
-    pipe_through [:inertia, :require_authenticated_user]
-
     get "/dashboard", PageController, :dashboard
+    
+    # Authentication routes (disabled for clean template)
+    # Uncomment and re-enable auth plugs above to use magic link authentication
+    # get "/login", AuthController, :show_login
+    # post "/auth/request", AuthController, :request_magic_link
+    # get "/auth/verify/:token", AuthController, :verify_magic_link
+    # delete "/auth/logout", AuthController, :logout
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

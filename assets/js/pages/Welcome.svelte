@@ -20,10 +20,10 @@
       
       <div class="flex justify-center gap-4">
         <Button 
-          on:click={() => router.get('/login')}
+          on:click={() => router.get('/dashboard')}
           class="px-8 py-3"
         >
-          Get Started
+          View Dashboard
         </Button>
         <Button 
           variant="outline"

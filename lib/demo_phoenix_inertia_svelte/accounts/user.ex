@@ -2,15 +2,13 @@ defmodule DemoPhoenixInertiaSvelte.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:username, :max_score]}
+  @derive {Jason.Encoder, only: [:username]}
   schema "users" do
     field :email, :string
     field :username, :string
     field :confirmed_at, :naive_datetime
-    field :max_score, :integer, virtual: true
 
     has_many :auth_tokens, DemoPhoenixInertiaSvelte.Accounts.AuthToken
-    has_one :user_score, DemoPhoenixInertiaSvelte.Tetris.UserScore
 
     timestamps()
   end

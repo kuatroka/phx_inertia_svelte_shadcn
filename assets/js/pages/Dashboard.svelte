@@ -21,12 +21,12 @@
           Dashboard
         </h1>
         <p class="text-gray-600 mt-2">
-          Welcome back, <strong>{$page.props.auth?.user?.username}</strong>!
+          Welcome to your Phoenix + Svelte 5 application!
         </p>
       </div>
       
-      <Button variant="outline" on:click={logout}>
-        Logout
+      <Button variant="outline" on:click={() => router.get('/')}>
+        Back to Home
       </Button>
     </div>
 
