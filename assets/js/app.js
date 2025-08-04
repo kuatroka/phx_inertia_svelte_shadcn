@@ -40,6 +40,7 @@ import topbar from "topbar";
 import axios from "axios";
 import { createInertiaApp } from "@inertiajs/svelte";
 import { hydrate, mount } from "svelte";
+import { theme } from "./lib/stores/theme.js";
 
 axios.defaults.xsrfHeaderName = "x-csrf-token";
 
@@ -58,6 +59,9 @@ createInertiaApp({
     }
   },
 });
+
+// Initialize theme
+theme.init();
 
 const csrfToken = document
   .querySelector("meta[name='csrf-token']")

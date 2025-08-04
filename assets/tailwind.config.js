@@ -1,5 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  content: [
+    './js/**/*.{html,js,svelte,ts}',
+    '../lib/**/*_html.ex',
+    '../lib/**/*_html.heex',
+    '../lib/**/*.ex'
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

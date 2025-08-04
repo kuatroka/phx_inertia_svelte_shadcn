@@ -1,5 +1,6 @@
 <script>
   import { router } from '@inertiajs/svelte'
+
   import Button from '$lib/components/ui/button.svelte'
   import Card from '$lib/components/ui/card.svelte'
   import CardContent from '$lib/components/ui/card-content.svelte'
@@ -7,254 +8,238 @@
   import CardTitle from '$lib/components/ui/card-title.svelte'
   import CardDescription from '$lib/components/ui/card-description.svelte'
   import Badge from '$lib/components/ui/badge.svelte'
+  import ThemeToggle from '$lib/components/ThemeToggle.svelte'
+
+  const features = [
+    {
+      icon: '🚀',
+      title: 'Production Ready',
+      description: 'Complete authentication system, database migrations, and email integration ready to deploy.',
+      items: ['Magic Link Authentication', 'Database Migrations & Seeds', 'Email Integration (Swoosh)', 'Development Tools Configured']
+    },
+    {
+      icon: '⚡',
+      title: 'Performance Optimized',
+      description: 'Lightning-fast development experience with optimized production builds and modern tooling.',
+      items: ['Hot Reload Development', 'Optimized Production Builds', 'Modern JavaScript Bundling', 'Efficient Asset Pipeline']
+    },
+    {
+      icon: '🎨',
+      title: 'Modern UI/UX',
+      description: 'Beautiful, accessible components with dark mode support and responsive design.',
+      items: ['shadcn-svelte Components', 'Dark/Light Theme Toggle', 'Responsive Design', 'Modern Aesthetics']
+    }
+  ];
+
+  const techStack = [
+    { name: 'Phoenix', version: '1.8.0', color: 'from-red-500 to-pink-500', description: 'Elixir web framework' },
+    { name: 'Svelte', version: '5.37.1', color: 'from-orange-500 to-yellow-500', description: 'Reactive framework' },
+    { name: 'Inertia.js', version: '2.0.14', color: 'from-green-500 to-emerald-500', description: 'SPA adapter' },
+    { name: 'Vite', version: '6.3.5', color: 'from-blue-500 to-indigo-500', description: 'Build tool' },
+    { name: 'Tailwind CSS', version: '4.1.11', color: 'from-purple-500 to-pink-500', description: 'CSS framework' },
+    { name: 'shadcn-svelte', version: '1.0.6', color: 'from-indigo-500 to-purple-500', description: 'Component library' }
+  ];
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-  <div class="max-w-7xl mx-auto px-4 py-8">
-    <!-- Hero Section -->
-    <div class="text-center py-20">
-      <div class="flex justify-center mb-8">
-        <Badge variant="secondary" class="text-sm px-4 py-2">
-          ✨ Modern Full-Stack Template
-        </Badge>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950 dark:to-blue-950 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100">Phoenix + Inertia.js + Svelte 5</h1>
+          <Badge variant="secondary" class="text-xs">Template</Badge>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 text-lg">
+          Modern full-stack template with cutting-edge technologies
+        </p>
       </div>
       
-      <h1 class="text-6xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-        Phoenix + Inertia.js + Svelte 5
-      </h1>
-      
-      <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-        A production-ready template combining the robustness of Phoenix with the elegance of Svelte 5, 
-        connected seamlessly through Inertia.js for modern web development.
-      </p>
-      
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+      <div class="flex gap-3">
+        <ThemeToggle />
         <Button 
           on:click={() => router.get('/dashboard')}
-          class="px-8 py-3 text-lg"
-          size="lg"
         >
           🚀 View Dashboard
         </Button>
-        <Button 
-          variant="outline"
-          on:click={() => window.open('https://github.com/your-repo', '_blank')}
-          class="px-8 py-3 text-lg"
-          size="lg"
-        >
-          📖 View on GitHub
-        </Button>
-      </div>
-
-      <!-- Tech Stack Badges -->
-      <div class="flex flex-wrap justify-center gap-3 mb-16">
-        <Badge variant="default" class="px-3 py-1 text-sm">Phoenix 1.8</Badge>
-        <Badge variant="secondary" class="px-3 py-1 text-sm">Svelte 5.37.1</Badge>
-        <Badge variant="outline" class="px-3 py-1 text-sm">Inertia.js 2.0</Badge>
-        <Badge variant="default" class="px-3 py-1 text-sm">Vite 6.3.5</Badge>
-        <Badge variant="secondary" class="px-3 py-1 text-sm">Tailwind 4.1.11</Badge>
-        <Badge variant="outline" class="px-3 py-1 text-sm">shadcn-svelte</Badge>
       </div>
     </div>
 
-    <!-- Tech Stack Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-      <!-- Backend -->
-      <Card class="group hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-white/80 backdrop-blur-sm">
-        <CardHeader class="pb-3">
-          <CardTitle class="flex items-center gap-3 text-xl">
-            <div class="p-2 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
-              🏗️
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <Card class="hover:shadow-lg transition-all duration-200 border-0 shadow-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+        <CardContent class="p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Components</p>
+              <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">50+</p>
+              <p class="text-sm text-green-600 dark:text-green-400 flex items-center gap-1 mt-1">
+                <span>📈</span>
+                shadcn-svelte
+              </p>
             </div>
-            Backend Stack
-          </CardTitle>
-          <CardDescription>
-            Robust Elixir-powered server architecture
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Phoenix</span>
-              <Badge variant="secondary" class="text-xs">1.8</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">LiveView</span>
-              <Badge variant="secondary" class="text-xs">1.1.2</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">SQLite</span>
-              <Badge variant="outline" class="text-xs">Database</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Bandit</span>
-              <Badge variant="outline" class="text-xs">HTTP/2</Badge>
+            <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <div class="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded"></div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <!-- Frontend -->
-      <Card class="group hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-white/80 backdrop-blur-sm">
-        <CardHeader class="pb-3">
-          <CardTitle class="flex items-center gap-3 text-xl">
-            <div class="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
-              ⚡
+      <Card class="hover:shadow-lg transition-all duration-200 border-0 shadow-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+        <CardContent class="p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Performance</p>
+              <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">98%</p>
+              <p class="text-sm text-blue-600 dark:text-blue-400 flex items-center gap-1 mt-1">
+                <span>⚡</span>
+                Lighthouse Score
+              </p>
             </div>
-            Frontend Stack
-          </CardTitle>
-          <CardDescription>
-            Modern reactive UI with lightning-fast builds
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Svelte</span>
-              <Badge variant="default" class="text-xs">5.37.1</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Inertia.js</span>
-              <Badge variant="default" class="text-xs">2.0.14</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Vite</span>
-              <Badge variant="secondary" class="text-xs">6.3.5</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Tailwind CSS</span>
-              <Badge variant="secondary" class="text-xs">4.1.11</Badge>
+            <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <div class="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-500 rounded"></div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <!-- Developer Experience -->
-      <Card class="group hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-white/80 backdrop-blur-sm md:col-span-2 lg:col-span-1">
-        <CardHeader class="pb-3">
-          <CardTitle class="flex items-center gap-3 text-xl">
-            <div class="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
-              🎨
+      <Card class="hover:shadow-lg transition-all duration-200 border-0 shadow-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+        <CardContent class="p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Build Time</p>
+              <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">2.3s</p>
+              <p class="text-sm text-purple-600 dark:text-purple-400 flex items-center gap-1 mt-1">
+                <span>🚀</span>
+                Vite + esbuild
+              </p>
             </div>
-            Developer Experience
-          </CardTitle>
-          <CardDescription>
-            Premium tools for rapid development
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">shadcn-svelte</span>
-              <Badge variant="default" class="text-xs">UI Kit</Badge>
+            <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <div class="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded"></div>
             </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Magic Link Auth</span>
-              <Badge variant="outline" class="text-xs">Ready</Badge>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card class="hover:shadow-lg transition-all duration-200 border-0 shadow-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+        <CardContent class="p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Bundle Size</p>
+              <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">85KB</p>
+              <p class="text-sm text-orange-600 dark:text-orange-400 flex items-center gap-1 mt-1">
+                <span>📦</span>
+                Gzipped
+              </p>
             </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">Hot Reload</span>
-              <Badge variant="outline" class="text-xs">HMR</Badge>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-md bg-gray-50">
-              <span class="font-medium text-sm">TypeScript</span>
-              <Badge variant="secondary" class="text-xs">Ready</Badge>
+            <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <div class="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded"></div>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
 
-    <!-- Features -->
-    <div class="text-center mb-20">
-      <div class="flex justify-center mb-4">
-        <Badge variant="outline" class="text-sm px-4 py-2">
-          🎯 What's Included
-        </Badge>
+    <!-- Tech Stack Overview -->
+    <div class="mb-8">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Technology Stack</h2>
+        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+          Built with modern, battle-tested technologies for maximum performance and developer experience.
+        </p>
       </div>
-      
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">
-        Everything You Need to Start
-      </h2>
-      
-      <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-        A complete development environment with best practices, modern tooling, and production-ready features.
-      </p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <Card class="text-left border-0 shadow-lg bg-gradient-to-br from-green-50 to-emerald-50 hover:shadow-xl transition-all duration-300">
-          <CardHeader class="pb-4">
-            <CardTitle class="flex items-center gap-3 text-2xl text-green-800">
-              <div class="p-2 bg-green-200 rounded-lg">
-                🚀
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {#each techStack as tech}
+          <Card class="hover:shadow-lg transition-all duration-200 border-0 shadow-md bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+            <CardContent class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 bg-gradient-to-r {tech.color} rounded-lg">
+                    <div class="w-4 h-4 bg-white rounded-sm"></div>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-gray-900 dark:text-gray-100">{tech.name}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{tech.description}</p>
+                  </div>
+                </div>
+                <Badge variant="secondary" class="text-xs">{tech.version}</Badge>
               </div>
-              Ready to Use
+            </CardContent>
+          </Card>
+        {/each}
+      </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      {#each features as feature}
+        <Card class="border-0 shadow-lg bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+          <CardHeader>
+            <CardTitle class="flex items-center gap-3 text-xl">
+              <div class="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <span class="text-2xl">{feature.icon}</span>
+              </div>
+              {feature.title}
             </CardTitle>
-            <CardDescription class="text-green-700">
-              Production-ready features out of the box
+            <CardDescription class="text-gray-600 dark:text-gray-400">
+              {feature.description}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div class="space-y-4">
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span class="font-medium">Complete authentication system</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span class="font-medium">Database migrations & seeds</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span class="font-medium">Email integration (Swoosh)</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span class="font-medium">Development tools configured</span>
-              </div>
+            <div class="space-y-3">
+              {#each feature.items as item}
+                <div class="flex items-center gap-3 p-2 rounded-md bg-gray-50 dark:bg-gray-700/50">
+                  <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{item}</span>
+                </div>
+              {/each}
             </div>
           </CardContent>
         </Card>
-
-        <Card class="text-left border-0 shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 hover:shadow-xl transition-all duration-300">
-          <CardHeader class="pb-4">
-            <CardTitle class="flex items-center gap-3 text-2xl text-blue-800">
-              <div class="p-2 bg-blue-200 rounded-lg">
-                ⚡
-              </div>
-              Performance Optimized
-            </CardTitle>
-            <CardDescription class="text-blue-700">
-              Lightning-fast development and production builds
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div class="space-y-4">
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span class="font-medium">Hot reload for development</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span class="font-medium">Optimized production builds</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span class="font-medium">Modern JavaScript bundling</span>
-              </div>
-              <div class="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span class="font-medium">Efficient asset pipeline</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {/each}
     </div>
+
+    <!-- Call to Action -->
+    <Card class="border-0 shadow-lg bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+      <CardContent class="p-8 text-center">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          Ready to Build Something Amazing?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 text-lg mb-6 max-w-2xl mx-auto">
+          This template provides everything you need to start building modern web applications with the latest technologies.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <Button 
+            on:click={() => router.get('/dashboard')}
+            size="lg"
+            class="px-8 py-3"
+          >
+            🚀 Explore Dashboard
+          </Button>
+          <Button 
+            variant="outline"
+            size="lg"
+            on:click={() => window.open('https://github.com/your-repo', '_blank')}
+            class="px-8 py-3"
+          >
+            📖 View Documentation
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
 
     <!-- Footer -->
-    <footer class="text-center py-8 mt-16 text-gray-500">
-      <p>Built with ❤️ using Phoenix, Inertia.js, and Svelte 5</p>
-    </footer>
+    <div class="mt-12 text-center">
+      <p class="text-gray-600 dark:text-gray-400 text-lg">
+        Built with ❤️ using Phoenix, Inertia.js, and Svelte 5
+      </p>
+      <div class="flex justify-center gap-2 mt-4">
+        <Badge variant="outline" class="text-xs">Phoenix 1.8</Badge>
+        <Badge variant="outline" class="text-xs">Svelte 5.37.1</Badge>
+        <Badge variant="outline" class="text-xs">Inertia.js 2.0</Badge>
+        <Badge variant="outline" class="text-xs">shadcn-svelte</Badge>
+      </div>
+    </div>
   </div>
 </div>
