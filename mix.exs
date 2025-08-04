@@ -7,7 +7,7 @@ defmodule DemoPhoenixInertiaSvelte.MixProject do
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :phoenix_live_view | Mix.compilers()],
+      compilers: [:phoenix_live_view | Mix.compilers()],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
